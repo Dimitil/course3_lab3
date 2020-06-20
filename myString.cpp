@@ -10,7 +10,7 @@
 MyString::MyString()
 {
 m_len=0;
-m_pStr = 0;
+m_pStr = nullptr;
 }
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
@@ -21,23 +21,17 @@ MyString::MyString(const char* str)
 	m_pStr = new char[m_len+1];
 	strcpy(m_pStr, str);
 }
-// Определение деструктора
-
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
-
 
 MyString::~MyString()
 {
 	m_len = 0;
 	delete[] m_pStr;
-
 	m_pStr = nullptr;
 }
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
-
-
 
 MyString::MyString(const MyString &MyStr)
 {
@@ -126,7 +120,7 @@ const MyString& MyString::operator=(const char* str)
 
 const MyString& MyString::operator=(MyString&& other)
 {
-	delete m_pStr;
+	delete[] m_pStr;
 	m_len = other.m_len;
 	m_pStr = other.m_pStr;
 

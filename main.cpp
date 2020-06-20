@@ -8,6 +8,9 @@
 #include <tchar.h>
 #include "myString.h"
 #include "Point.h"
+#include "MyData.h"
+#include "base.h"
+#include "Pair.h"
 #define	  stop __asm nop
 
 
@@ -232,6 +235,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	stop
 	}
 
+	
+	{
+		stop
+		
+		//MyData D(MyData::UNDEF, 20, "Rabotyaga", 350);
+		
+		//Pair P("Stepanof", D);
+		
+		stop
+	}
+
 	stop
 	//Задание 3. Разработать "базу данных" о сотрудниках посредством ассоциативного
 	//массива. Ключом является фамилия (ключ в задании уникален, поэтому нескольких Ивановых
@@ -249,6 +263,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::cout<<bd;	//вывод информации обо всех сотрудниках
 
 */
+
 	
 	return 0;
 }//endmain
