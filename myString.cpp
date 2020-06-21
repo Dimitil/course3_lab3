@@ -26,17 +26,17 @@ MyString::MyString(const char* str)
 
 MyString::~MyString()
 {
-	m_len = 0;
 	delete[] m_pStr;
 	m_pStr = nullptr;
+	m_len  = 0;
 }
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
 
 MyString::MyString(const MyString &MyStr)
 {
-	m_len = strlen(MyStr.m_pStr);
-	m_pStr=new char[m_len+1];
+	m_len  = strlen(MyStr.m_pStr);
+	m_pStr = new char[m_len+1];
 	strcpy(m_pStr, MyStr.m_pStr);
 }
 
@@ -48,7 +48,7 @@ void MyString::SetNewString(const char*  NewString)
 	 if(m_len<strlen(NewString))
 		{
 		delete[] m_pStr;
-		m_len = strlen(NewString);
+		m_len  = strlen(NewString);
 		m_pStr = new char[m_len+1];
 		}
 
@@ -83,7 +83,7 @@ MyString* MyStringCat(const char* str, ...)
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
 
-const MyString& MyString::operator=(const MyString& other)
+MyString& MyString::operator=(const MyString& other)
 {
 	if (this != &other)
 	{
@@ -100,7 +100,7 @@ const MyString& MyString::operator=(const MyString& other)
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
 
-const MyString& MyString::operator=(const char* str)
+MyString& MyString::operator=(const char* str)
 {
 	if (m_pStr != str)
 	{
@@ -118,14 +118,14 @@ const MyString& MyString::operator=(const char* str)
 
 //--//--//--//--//--//--//-//--//--//--//--//--//--//--//--//--//--//--//--//--
 
-const MyString& MyString::operator=(MyString&& other)
+MyString& MyString::operator=(MyString&& other)
 {
 	delete[] m_pStr;
-	m_len = other.m_len;
+	m_len  = other.m_len;
 	m_pStr = other.m_pStr;
 
-	other.m_len = 0;
-	other.m_pStr=nullptr;
+	other.m_len  = 0;
+	other.m_pStr = nullptr;
 	return *this;
 }
 
@@ -143,7 +143,7 @@ MyString MyString::operator+(const MyString& other) const
 {
 	MyString res;
 
-	res.m_len = this->m_len + other.m_len;
+	res.m_len  = this->m_len + other.m_len;
 	res.m_pStr = new char[res.m_len + 1];
 	strcpy(res.m_pStr, this->m_pStr);
 	strcat(res.m_pStr, other.m_pStr);

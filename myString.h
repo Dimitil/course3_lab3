@@ -17,9 +17,9 @@ public:
 	const char* GetString() const { if (this) return m_pStr; else return ""; }
 	void SetNewString(const char* NewString);
 
-	const MyString& operator=(const MyString& other);
-	const MyString& operator=(const char* str);
-	const MyString& operator=(MyString&& other);
+	MyString& operator=(const MyString& other);
+	MyString& operator=(const char* str);
+	MyString& operator=(MyString&& other);
 
 	friend std::ostream& operator<<(std::ostream& os, const MyString& str);
 

@@ -9,8 +9,9 @@
 #include "myString.h"
 #include "Point.h"
 #include "MyData.h"
-#include "base.h"
 #include "Pair.h"
+#include "base.h"
+
 #define	  stop __asm nop
 
 
@@ -233,20 +234,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::cout << "\n" << s4 << "\n";
 
 	stop
-	}
-
 	
-	{
-		stop
-		
-		//MyData D(MyData::UNDEF, 20, "Rabotyaga", 350);
-		
-		//Pair P("Stepanof", D);
-		
-		stop
 	}
 
-	stop
 	//Задание 3. Разработать "базу данных" о сотрудниках посредством ассоциативного
 	//массива. Ключом является фамилия (ключ в задании уникален, поэтому нескольких Ивановых
 	//в базе быть не может), а данными: пол, возраст, должность, зарплата...
@@ -256,15 +246,37 @@ int _tmain(int argc, _TCHAR* argv[])
 	//вывод информации о конкретном сотруднике
 	//вывод всей (или интересующей) информации о всех сотрудниках
 	//Например:
-/*
-		BD bd;	//создание пустой базы
-		bd["Ivanov"] = Data(30,MALE,<остальные данные>);	//если Ivanov-а в базе еще нет, то
+	std::cout << "\nTask #3\n";
+
+	Base bd;	//создание пустой базы
+
+	bd["Ivanoff"]		= MyData(MALE, 30, "glavbuh", 340);	//если Ivanov-а в базе еще нет, то
 						//добавление, если уже есть, то замена его реквизитов
-		std::cout<<bd;	//вывод информации обо всех сотрудниках
 
-*/
+	bd["Garsia-Markes"] = MyData(MALE, 60, "sekretar", 400);
 
+	bd["Curie"]			= MyData(FEMALE, 68, "laborant", 150);
+
+	bd["Ford"]			= MyData(MALE, 50, "director", 550);
+
+	bd["Tesla"]			= MyData(MALE, 98, "ingeneer", 450);
+
+	bd["Musk"]			= MyData(MALE, 45, "manager", 250);
+
+	bd["Cereteli"]		= MyData(MALE, 74, "Tokar`CHPU", 250);
+
+	std::cout<<bd;	//вывод информации обо всех сотрудниках
+
+	if (bd.deletePair("Musk"))
+	{
+		std::cout<<"\nAfter delete\n" << bd;	//вывод информации обо всех сотрудниках
+	}
+	else std::cout << "\nWorker not found\n";
+	
+	bd["qweqw"] = MyData(MALE, 45, "man", 12350);
+
+	bd.print("qweq");
+	//Сделать отдельный вывод для одного сотруника
 	
 	return 0;
 }//endmain
-
