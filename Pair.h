@@ -6,7 +6,7 @@ class Base;
 
 class Pair {
 
-		MyString m_key; //ключ - фамилия
+		MyString m_key; //ГЄГ«ГѕГ· - ГґГ Г¬ГЁГ«ГЁГї
 		MyData m_Data;
 
 	public: 
@@ -22,7 +22,7 @@ class Pair {
 		//Pair(Pair&& other); 
 		//Pair& operator=(Pair&& other);
 		bool operator==(const char* k) const;
-		friend class Base;	//чтобы работала индексация возвращающая MyData
+		friend class Base;	//Г·ГІГ®ГЎГ» Г°Г ГЎГ®ГІГ Г«Г  ГЁГ­Г¤ГҐГЄГ±Г Г¶ГЁГї ГўГ®Г§ГўГ°Г Г№Г ГѕГ№Г Гї MyData РІСЃРµ РјРµС‚РѕРґС‹ СЃРґРµР»Р°С‚СЊ РїСЂРёРІР°С‚РЅС‹РјРё
 		friend std::ostream& operator<<(std::ostream& os, const Pair& pair);
 		friend std::ostream& operator<<(std::ostream& os, const Base& bd);
 };
