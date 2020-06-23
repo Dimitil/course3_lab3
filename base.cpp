@@ -74,7 +74,7 @@ Base& Base::operator=(Base&& bd)
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 
-MyData& Base::operator[](const char* key)
+MyData& Base::operator[](const char* key) // ПЕРЕГРУЗКА ДЛЯ КОНСТ?
 {
 	for (size_t i = 0; i < m_count; i++)
 	{
@@ -94,51 +94,13 @@ MyData& Base::operator[](const char* key)
 			newm_pBase[i] = std::move(m_pBase[i]);   //интересно
 		}
 		//memcpy(newm_pBase, m_pBase, (m_capacity-add_to_capacity)*sizeof(Pair));
-		delete[] m_pBase;               //×ÒÎ ÇÄÅÑÜ ÏÐÎÈÑÕÎÄÈÒ ÍÅ ÏÎÍÈÌÀÞ!!!!!!!!!!!!!!!!!!!!!!!
+		delete[] m_pBase;               //почему через мемспу не работает!!!!!!!!!!!!!!!!!!!!!!!
 		m_pBase = newm_pBase;
 	}
 
 	m_count++;
 	m_pBase[m_count-1].m_key.SetNewString(key);
-	m_pBase[m_count - 1].m_Data = MyData();//åñëè íîâîìó ñîòðóäíèêó íå äàëè äàííûõ ïîñëå âûçîâà, îíè îñòàíóòüñÿ äåôîëòîâûìè 
-	// подумать с этим вот явным вызовом дефолтного конструктора.
-
-	return m_pBase[m_count - 1].m_Data;
-}	
-
-//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
-
-
-//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
-
-const MyData& Base::operator[](const char* key)	// КОРРЕКТНО ЛИ ЗДЕСЬ ВСЕ????????????????????????
-{
-	for (size_t i = 0; i < m_count; i++)
-	{
-		if (m_pBase[i] == key)
-		{
-		return	m_pBase[i].m_Data;
-		}
-	}
-
-	if (m_count>=m_capacity)
-	{
-		int add_to_capacity = 3;
-		m_capacity+=add_to_capacity;
-		Pair* newm_pBase = new Pair[m_capacity];
-		for (size_t i = 0; i < m_capacity - add_to_capacity; i++)
-		{
-			newm_pBase[i] = std::move(m_pBase[i]);   //интересно
-		}
-		//memcpy(newm_pBase, m_pBase, (m_capacity-add_to_capacity)*sizeof(Pair));
-		delete[] m_pBase;               //×ÒÎ ÇÄÅÑÜ ÏÐÎÈÑÕÎÄÈÒ ÍÅ ÏÎÍÈÌÀÞ!!!!!!!!!!!!!!!!!!!!!!!
-		m_pBase = newm_pBase;
-	}
-
-	m_count++;
-	m_pBase[m_count-1].m_key.SetNewString(key);
-	m_pBase[m_count - 1].m_Data = MyData();//åñëè íîâîìó ñîòðóäíèêó íå äàëè äàííûõ ïîñëå âûçîâà, îíè îñòàíóòüñÿ äåôîëòîâûìè 
-	// подумать с этим вот явным вызовом дефолтного конструктора.
+	m_pBase[m_count - 1].m_Data = MyData();//подумать с этим вот явным вызовом дефолтного конструктора.!!!!!!!!!!!!
 
 	return m_pBase[m_count - 1].m_Data;
 }	
