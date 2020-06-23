@@ -22,9 +22,9 @@ Base::~Base()
 Base::Base(const Base& bd)
 {
 	m_count		= bd.m_count;
-	m_capacity	= bd.m_capacity;
+	m_capacity  = m_count;
 	m_pBase		= new Pair[m_capacity];
-	memcpy(m_pBase, bd.m_pBase, m_count * sizeof(Pair));
+	//memcpy(m_pBase, bd.m_pBase, m_count * sizeof(Pair)); Скопировать руками в цикле
 }
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
@@ -34,13 +34,13 @@ Base& Base::operator=(const Base& bd)
 	if (this != &bd)
 	{
 		m_count = bd.m_count;
-		if (m_capacity < bd.m_capacity)
+		if (m_capacity < bd.m_count)
 		{
-			m_capacity = bd.m_capacity;
+			m_capacity = bd.m_count;
 			delete[] m_pBase;
 			m_pBase = new Pair[m_capacity];
 		}
-		memcpy(m_pBase, bd.m_pBase, m_count * sizeof(Pair));
+		//memcpy(m_pBase, bd.m_pBase, m_count * sizeof(Pair));  переделать руками!!!!!!!!!!!!!!!!!!!
 	}
 	return *this;
 }
@@ -49,7 +49,7 @@ Base& Base::operator=(const Base& bd)
 
 Base::Base(Base&& bd)
 {
-	m_count		= bd.m_count;
+	m_count		= bd.m_count;//проверка на самоприсваивание
 	m_capacity	= bd.m_capacity;
 	m_pBase		= bd.m_pBase;
 
@@ -62,10 +62,11 @@ Base::Base(Base&& bd)
 
 Base& Base::operator=(Base&& bd)
 {
+	//высвыбодить память , проверка на самоприсваивание
 	m_count = bd.m_count;
 	m_capacity = bd.m_capacity;
 	m_pBase = bd.m_pBase;
-
+	
 	bd.m_pBase = nullptr;
 	bd.m_count = 0;
 	bd.m_capacity = 0;
@@ -74,7 +75,7 @@ Base& Base::operator=(Base&& bd)
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
 
-MyData& Base::operator[](const char* key) // ПЕРЕГРУЗКА ДЛЯ КОНСТ?
+MyData& Base::operator[](const char* key)
 {
 	for (size_t i = 0; i < m_count; i++)
 	{
@@ -93,8 +94,8 @@ MyData& Base::operator[](const char* key) // ПЕРЕГРУЗКА ДЛЯ КОН�
 		{
 			newm_pBase[i] = std::move(m_pBase[i]);   //интересно
 		}
-		//memcpy(newm_pBase, m_pBase, (m_capacity-add_to_capacity)*sizeof(Pair));
-		delete[] m_pBase;               //почему через мемспу не работает!!!!!!!!!!!!!!!!!!!!!!!
+		
+		delete[] m_pBase;     
 		m_pBase = newm_pBase;
 	}
 
@@ -111,7 +112,7 @@ std::ostream& operator<<(std::ostream& os, const Base& bd)
 {
 	for (size_t i = 0; i < bd.m_count; i++)
 	{
-		os << std::endl<< i+1 <<'.' << bd.m_pBase[i].m_key << bd.m_pBase[i].m_Data << std::endl;
+		os << std::endl<< i+1 <<'.' << bd.m_pBase[i]<< std::endl;
 	}
 	return os;
 }
@@ -127,8 +128,10 @@ int Base::deletePair(const char* key)
 		if (m_pBase[i] == key)
 		{
 			delete_index = i;//èùåì óäàëÿåìîãî ñîòðóäíèêà
+			
+			break;
 		}
-	}
+	}			//можно в одном цикле
 	
 	if (delete_index != not_found)//åñëè íàøëè, òî ïåðåñòàâëÿåì íàø ìàññèâ , çàòèðàÿ óäàëÿåìîãî
 	{

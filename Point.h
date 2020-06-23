@@ -22,7 +22,7 @@ class Point
 		Point operator-(const Point& other) const;
 		Point operator-(int a) const;
 
-		Point operator+() const;
+		const Point& operator+() const;
 		Point operator-() const;
 };
 

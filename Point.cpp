@@ -98,7 +98,7 @@ Point Point::operator-(int a) const
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
 
-Point Point::operator+() const
+const Point& Point::operator+() const
 {
 	return *this;
 }

@@ -19,5 +19,4 @@ class MyData
 		//MyData(MyData&& d); 
 		//MyData& operator=(MyData&& d);
 		friend std::ostream& operator<<(std::ostream& os, const MyData& d);
-
 };

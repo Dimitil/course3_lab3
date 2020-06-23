@@ -102,7 +102,7 @@ MyString& MyString::operator=(const MyString& other)
 
 MyString& MyString::operator=(const char* str)
 {
-	if (m_pStr != str)
+	if (m_pStr != str)//исправить!неадекватно!!!!!!!!!!!!!!!!!!
 	{
 		if (m_len < strlen(str))
 		{
@@ -120,6 +120,7 @@ MyString& MyString::operator=(const char* str)
 
 MyString& MyString::operator=(MyString&& other)
 {
+	//проверка на самоприсваевание!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	delete[] m_pStr;
 	m_len  = other.m_len;
 	m_pStr = other.m_pStr;
