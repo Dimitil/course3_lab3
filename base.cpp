@@ -91,21 +91,59 @@ MyData& Base::operator[](const char* key)
 		Pair* newm_pBase = new Pair[m_capacity];
 		for (size_t i = 0; i < m_capacity - add_to_capacity; i++)
 		{
-			newm_pBase[i] = m_pBase[i];
+			newm_pBase[i] = std::move(m_pBase[i]);   //Ð¸Ð½Ñ‚ÐµÑ€ÐµÑÐ½Ð¾
 		}
 		//memcpy(newm_pBase, m_pBase, (m_capacity-add_to_capacity)*sizeof(Pair));
-		delete[] m_pBase;               //×ÒÎ ÇÄÅÑÜ ÏÐÎÈÑÕÎÄÈÒ ÍÅ ÏÎÍÈÌÀÞ!!!!!!!!!!!!!!!!!!!!!!!
+		delete[] m_pBase;               //Ã—Ã’ÃŽ Ã‡Ã„Ã…Ã‘Ãœ ÃÃÃŽÃˆÃ‘Ã•ÃŽÃ„ÃˆÃ’ ÃÃ… ÃÃŽÃÃˆÃŒÃ€Ãž!!!!!!!!!!!!!!!!!!!!!!!
 		m_pBase = newm_pBase;
 	}
 
 	m_count++;
 	m_pBase[m_count-1].m_key.SetNewString(key);
-	m_pBase[m_count - 1].m_Data = MyData();//åñëè íîâîìó ñîòðóäíèêó íå äàëè äàííûõ ïîñëå âûçîâà, îíè îñòàíóòüñÿ äåôîëòîâûìè
+	m_pBase[m_count - 1].m_Data = MyData();//Ã¥Ã±Ã«Ã¨ Ã­Ã®Ã¢Ã®Ã¬Ã³ Ã±Ã®Ã²Ã°Ã³Ã¤Ã­Ã¨ÃªÃ³ Ã­Ã¥ Ã¤Ã Ã«Ã¨ Ã¤Ã Ã­Ã­Ã»Ãµ Ã¯Ã®Ã±Ã«Ã¥ Ã¢Ã»Ã§Ã®Ã¢Ã , Ã®Ã­Ã¨ Ã®Ã±Ã²Ã Ã­Ã³Ã²Ã¼Ã±Ã¿ Ã¤Ã¥Ã´Ã®Ã«Ã²Ã®Ã¢Ã»Ã¬Ã¨ 
+	// Ð¿Ð¾Ð´ÑƒÐ¼Ð°Ñ‚ÑŒ Ñ ÑÑ‚Ð¸Ð¼ Ð²Ð¾Ñ‚ ÑÐ²Ð½Ñ‹Ð¼ Ð²Ñ‹Ð·Ð¾Ð²Ð¾Ð¼ Ð´ÐµÑ„Ð¾Ð»Ñ‚Ð½Ð¾Ð³Ð¾ ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€Ð°.
 
 	return m_pBase[m_count - 1].m_Data;
-}
+}	
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//
+
+const MyData& Base::operator[](const char* key)	// ÐšÐžÐ Ð Ð•ÐšÐ¢ÐÐž Ð›Ð˜ Ð—Ð”Ð•Ð¡Ð¬ Ð’Ð¡Ð•????????????????????????
+{
+	for (size_t i = 0; i < m_count; i++)
+	{
+		if (m_pBase[i] == key)
+		{
+		return	m_pBase[i].m_Data;
+		}
+	}
+
+	if (m_count>=m_capacity)
+	{
+		int add_to_capacity = 3;
+		m_capacity+=add_to_capacity;
+		Pair* newm_pBase = new Pair[m_capacity];
+		for (size_t i = 0; i < m_capacity - add_to_capacity; i++)
+		{
+			newm_pBase[i] = std::move(m_pBase[i]);   //Ð¸Ð½Ñ‚ÐµÑ€ÐµÑÐ½Ð¾
+		}
+		//memcpy(newm_pBase, m_pBase, (m_capacity-add_to_capacity)*sizeof(Pair));
+		delete[] m_pBase;               //Ã—Ã’ÃŽ Ã‡Ã„Ã…Ã‘Ãœ ÃÃÃŽÃˆÃ‘Ã•ÃŽÃ„ÃˆÃ’ ÃÃ… ÃÃŽÃÃˆÃŒÃ€Ãž!!!!!!!!!!!!!!!!!!!!!!!
+		m_pBase = newm_pBase;
+	}
+
+	m_count++;
+	m_pBase[m_count-1].m_key.SetNewString(key);
+	m_pBase[m_count - 1].m_Data = MyData();//Ã¥Ã±Ã«Ã¨ Ã­Ã®Ã¢Ã®Ã¬Ã³ Ã±Ã®Ã²Ã°Ã³Ã¤Ã­Ã¨ÃªÃ³ Ã­Ã¥ Ã¤Ã Ã«Ã¨ Ã¤Ã Ã­Ã­Ã»Ãµ Ã¯Ã®Ã±Ã«Ã¥ Ã¢Ã»Ã§Ã®Ã¢Ã , Ã®Ã­Ã¨ Ã®Ã±Ã²Ã Ã­Ã³Ã²Ã¼Ã±Ã¿ Ã¤Ã¥Ã´Ã®Ã«Ã²Ã®Ã¢Ã»Ã¬Ã¨ 
+	// Ð¿Ð¾Ð´ÑƒÐ¼Ð°Ñ‚ÑŒ Ñ ÑÑ‚Ð¸Ð¼ Ð²Ð¾Ñ‚ ÑÐ²Ð½Ñ‹Ð¼ Ð²Ñ‹Ð·Ð¾Ð²Ð¾Ð¼ Ð´ÐµÑ„Ð¾Ð»Ñ‚Ð½Ð¾Ð³Ð¾ ÐºÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€Ð°.
+
+	return m_pBase[m_count - 1].m_Data;
+}	
+
+//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
 
 std::ostream& operator<<(std::ostream& os, const Base& bd)
 {
@@ -126,11 +164,11 @@ int Base::deletePair(const char* key)
 	{
 		if (m_pBase[i] == key)
 		{
-			delete_index = i;//èùåì óäàëÿåìîãî ñîòðóäíèêà
+			delete_index = i;//Ã¨Ã¹Ã¥Ã¬ Ã³Ã¤Ã Ã«Ã¿Ã¥Ã¬Ã®Ã£Ã® Ã±Ã®Ã²Ã°Ã³Ã¤Ã­Ã¨ÃªÃ 
 		}
 	}
 	
-	if (delete_index != not_found)//åñëè íàøëè, òî ïåðåñòàâëÿåì íàø ìàññèâ , çàòèðàÿ óäàëÿåìîãî
+	if (delete_index != not_found)//Ã¥Ã±Ã«Ã¨ Ã­Ã Ã¸Ã«Ã¨, Ã²Ã® Ã¯Ã¥Ã°Ã¥Ã±Ã²Ã Ã¢Ã«Ã¿Ã¥Ã¬ Ã­Ã Ã¸ Ã¬Ã Ã±Ã±Ã¨Ã¢ , Ã§Ã Ã²Ã¨Ã°Ã Ã¿ Ã³Ã¤Ã Ã«Ã¿Ã¥Ã¬Ã®Ã£Ã®
 	{
 		for (size_t i = delete_index; i < m_count - 1; i++)
 		{
@@ -138,12 +176,12 @@ int Base::deletePair(const char* key)
 		}
 		m_count--;	
 	}
-	return delete_index + 1;//âîçâðàùàåì ïîðÿäêîâûé íîìåð óäàëåííîãî, èëè 0 åñëè íèêîãî íå óäàëèëè 
+	return delete_index + 1;//Ã¢Ã®Ã§Ã¢Ã°Ã Ã¹Ã Ã¥Ã¬ Ã¯Ã®Ã°Ã¿Ã¤ÃªÃ®Ã¢Ã»Ã© Ã­Ã®Ã¬Ã¥Ã° Ã³Ã¤Ã Ã«Ã¥Ã­Ã­Ã®Ã£Ã®, Ã¨Ã«Ã¨ 0 Ã¥Ã±Ã«Ã¨ Ã­Ã¨ÃªÃ®Ã£Ã® Ã­Ã¥ Ã³Ã¤Ã Ã«Ã¨Ã«Ã¨ 
 }
 
 //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
 
-void Base::print(const char* key) const //âûâîä ñîòðóäíèêà
+void Base::print(const char* key) const //Ã¢Ã»Ã¢Ã®Ã¤ Ã±Ã®Ã²Ã°Ã³Ã¤Ã­Ã¨ÃªÃ 
 {
 	for (size_t i = 0; i < m_count; i++)
 	{
